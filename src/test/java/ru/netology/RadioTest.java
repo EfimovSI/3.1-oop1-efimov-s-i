@@ -6,9 +6,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
 
+    Radio radio = new Radio();
+
+    @Test
+    void shouldUseDefaultConstructor() {
+        int expected = 10;
+
+        assertEquals(expected, radio.getStationAmount());
+    }
+
+    @Test
+    void shouldUseAllArgsConstructor() {
+        Radio radio = new Radio(12, 5, 5);
+        int expected = 12;
+
+        assertEquals(expected, radio.getStationAmount());
+    }
+
     @Test
     void shouldSetStationInRange() {
-        Radio radio = new Radio();
         int expected = 8;
 
         radio.setStation(8);
@@ -18,7 +34,6 @@ class RadioTest {
 
     @Test
     void shouldSetStationAboveRange() {
-        Radio radio = new Radio();
         int expected = 0;
 
         radio.setStation(10);
@@ -28,7 +43,6 @@ class RadioTest {
 
     @Test
     void shouldSetStationUnderRange() {
-        Radio radio = new Radio();
         int expected = 0;
 
         radio.setStation(-5);
@@ -38,7 +52,6 @@ class RadioTest {
 
     @Test
     void shouldSetNextStationInRange() {
-        Radio radio = new Radio();
         int expected = 1;
 
         radio.setNextStation();
@@ -48,9 +61,8 @@ class RadioTest {
 
     @Test
     void shouldSetNextStationAboveRange() {
-        Radio radio = new Radio();
         int expected = 0;
-        radio.setStation(9);
+        radio.setStation(radio.getStationAmount() - 1);
 
         radio.setNextStation();
 
@@ -59,7 +71,6 @@ class RadioTest {
 
     @Test
     void shouldSetPreviousStationInRange() {
-        Radio radio = new Radio();
         int expected = 6;
         radio.setStation(7);
 
@@ -70,8 +81,7 @@ class RadioTest {
 
     @Test
     void shouldSetPreviousStationUnderRange() {
-        Radio radio = new Radio();
-        int expected = 9;
+        int expected = radio.getStationAmount() - 1;
 
         radio.setPreviousStation();
 
@@ -79,8 +89,34 @@ class RadioTest {
     }
 
     @Test
+    void shouldSetVolumeInRange() {
+        int expected = 50;
+
+        radio.setVolume(50);
+
+        assertEquals(expected, radio.getVolume());
+    }
+
+    @Test
+    void shouldSetVolumeAboveRange() {
+        int expected = 0;
+
+        radio.setVolume(110);
+
+        assertEquals(expected, radio.getVolume());
+    }
+
+    @Test
+    void shouldSetVolumeUnderRange() {
+        int expected = 0;
+
+        radio.setVolume(-15);
+
+        assertEquals(expected, radio.getVolume());
+    }
+
+    @Test
     void shouldIncreaseVolumeInRange() {
-        Radio radio = new Radio();
         int expected = 1;
 
         radio.increaseVolume();
@@ -90,21 +126,8 @@ class RadioTest {
 
     @Test
     void shouldIncreaseVolumeAboveRange() {
-        Radio radio = new Radio();
-        int expected = 10;
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        // Поступил таким образом, поскольку сеттер для звука в условиях задачи не значится,
-        // (к тому же, сеттер потребует дополнительных тестов для покрытия branch'а),
-        // а использование цикла в тесте потребует тестировать такой тест
+        int expected = 100;
+        radio.setVolume(100);
 
         radio.increaseVolume();
 
@@ -113,10 +136,8 @@ class RadioTest {
 
     @Test
     void shouldDecreaseVolumeInRange() {
-        Radio radio = new Radio();
-        int expected = 1;
-        radio.increaseVolume();
-        radio.increaseVolume();
+        int expected = 9;
+        radio.setVolume(10);
 
         radio.decreaseVolume();
 
@@ -125,7 +146,6 @@ class RadioTest {
 
     @Test
     void shouldDecreaseVolumeUnderRange() {
-        Radio radio = new Radio();
         int expected = 0;
 
         radio.decreaseVolume();
