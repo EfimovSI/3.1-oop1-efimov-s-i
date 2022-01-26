@@ -16,8 +16,8 @@ class RadioTest {
     }
 
     @Test
-    void shouldUseRandomConstructor() {
-        Radio radio = new Radio(12);
+    void shouldUseAllArgsConstructor() {
+        Radio radio = new Radio(12, 5, 5);
         int expected = 12;
 
         assertEquals(expected, radio.getStationAmount());
