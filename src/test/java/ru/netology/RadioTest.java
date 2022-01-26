@@ -7,6 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class RadioTest {
 
     @Test
+    void shouldUseDefaultConstructor() {
+        Radio radio = new Radio();
+        int expected = 9;
+
+        assertEquals(expected, radio.getStation());
+    }
+
+    @Test
+    void shouldUseRandomConstructor() {
+        Radio radio = new Radio(12);
+        int expected = 12;
+
+        assertEquals(expected, radio.getStationAmount());
+    }
+
+    @Test
     void shouldSetStationInRange() {
         Radio radio = new Radio();
         int expected = 8;
@@ -50,7 +66,7 @@ class RadioTest {
     void shouldSetNextStationAboveRange() {
         Radio radio = new Radio();
         int expected = 0;
-        radio.setStation(9);
+        radio.setStation(radio.getStationAmount() - 1);
 
         radio.setNextStation();
 
@@ -71,7 +87,7 @@ class RadioTest {
     @Test
     void shouldSetPreviousStationUnderRange() {
         Radio radio = new Radio();
-        int expected = 9;
+        int expected = radio.getStationAmount() - 1;
 
         radio.setPreviousStation();
 
@@ -91,20 +107,8 @@ class RadioTest {
     @Test
     void shouldIncreaseVolumeAboveRange() {
         Radio radio = new Radio();
-        int expected = 10;
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        // Поступил таким образом, поскольку сеттер для звука в условиях задачи не значится,
-        // (к тому же, сеттер потребует дополнительных тестов для покрытия branch'а),
-        // а использование цикла в тесте потребует тестировать такой тест
+        int expected = 100;
+        radio.setVolume(100);
 
         radio.increaseVolume();
 
@@ -114,9 +118,8 @@ class RadioTest {
     @Test
     void shouldDecreaseVolumeInRange() {
         Radio radio = new Radio();
-        int expected = 1;
-        radio.increaseVolume();
-        radio.increaseVolume();
+        int expected = 9;
+        radio.setVolume(10);
 
         radio.decreaseVolume();
 
